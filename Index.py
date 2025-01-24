@@ -1,4 +1,4 @@
-import pandas as pd
+import pandas as pd 
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
@@ -28,10 +28,3 @@ new_email = ["Congrats, You won Lottery!"]
 new_email_tfidf = tfidf.transform(new_email)
 prediction = model.predict(new_email_tfidf)
 print("Prediction:", "Spam" if prediction[0] == 1 else "Not Spam")
-
-<<<<<<< HEAD
-
-=======
-# Output:
-# Ambikesh Ka code
->>>>>>> 6d8714c5552635db37cc4bfe23a55274f902dcfd
