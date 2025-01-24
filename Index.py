@@ -28,3 +28,6 @@ new_email = ["Congrats, You won Lottery!"]
 new_email_tfidf = tfidf.transform(new_email)
 prediction = model.predict(new_email_tfidf)
 print("Prediction:", "Spam" if prediction[0] == 1 else "Not Spam")
+
+
+#ishusachan
