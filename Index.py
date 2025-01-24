@@ -30,3 +30,4 @@ prediction = model.predict(new_email_tfidf)
 print("Prediction:", "Spam" if prediction[0] == 1 else "Not Spam")
 
 # Output:
+# Ambikesh Ka code
