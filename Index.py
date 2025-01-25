@@ -26,7 +26,8 @@ accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy)
 print("Classification Report:\n", classification_report(y_test, y_pred))
 
-new_email = ["Congrats, You won Lottery!"]
+new_email = input("Enter a new email: ")
+new_email = [new_email]
 new_email_tfidf = tfidf.transform(new_email)
 prediction = model.predict(new_email_tfidf)
 
