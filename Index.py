@@ -8,7 +8,7 @@ dataset = pd.read_csv("emails.csv")
 
 email_column = 'text'
 label_column = 'spam'
-
+#ambikesh
 dataset.dropna(subset=[email_column, label_column], inplace=True)
 
 tfidf = TfidfVectorizer(stop_words='english', max_features=5000)
