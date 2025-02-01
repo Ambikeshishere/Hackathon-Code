@@ -10,9 +10,9 @@ from sklearn.model_selection import train_test_split
 import os
 
 # Email Credentials (use environment variables for security)
-EMAIL = os.getenv("EMAIL")
-PASSWORD = os.getenv("EMAIL_PASSWORD")
-IMAP_SERVER = "imap.gmail.com"
+EMAIL = "abhay2004raj15@gmail.com"
+PASSWORD = "uvgc jdra muxw bjdo"  # Use an App Password if 2FA is enabled
+IMAP_SERVER = "imap.gmail.com"  # Change for Outlook, Yahoo, etc.
 
 # Load dataset (ensure emails.csv is in the correct location)
 dataset = pd.read_csv("emails.csv")
