@@ -7,63 +7,26 @@ from email.header import decode_header
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, classification_report
+import os
 
-# Email Credentials
-EMAIL = "abhay2004raj15@gmail.com"
-PASSWORD = "uvgc jdra muxw bjdo"  # Use an App Password if 2FA is enabled
-IMAP_SERVER = "imap.gmail.com"  # Change for Outlook, Yahoo, etc.
+# Email Credentials (use environment variables for security)
+EMAIL = os.getenv("EMAIL")
+PASSWORD = os.getenv("EMAIL_PASSWORD")
+IMAP_SERVER = "imap.gmail.com"
 
-# Load dataset
+# Load dataset (ensure emails.csv is in the correct location)
 dataset = pd.read_csv("emails.csv")
 
 email_column = 'text'
 label_column = 'spam'
 dataset.dropna(subset=[email_column, label_column], inplace=True)
 
-# List of trusted email providers
-trusted_providers = {
-    "gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "icloud.com", 
-    "pintrest.com", "linkedin.com", "protonmail.com", "zoho.com", 
-    "aol.com", "gmx.com", "mail.com", "yandex.com", "fastmail.com", "tutanota.com", 
-    "ymail.com", "live.com", "mail.ru", "seznam.cz", "inbox.com", 
-    "tiscali.co.uk", "comcast.net", "verizon.net", "shaw.ca", "bell.net", 
-    "sbcglobal.net", "earthlink.net", "charter.net", "frontier.com", "rediffmail.com", 
-    "zoho.in", "mail.bsnl.in", "mtml.net.in", "bigrock.in", "hostinger.in", 
-    "rackspace.in", "protonmail.ch", "mail.ru", "yandex.ru", "tutanota.de", 
-    "gmx.de", "web.de", "mail.com", "fastmail.fm", "hushmail.com", 
-    "mailfence.com", "runbox.com", "posteo.de", "countermail.com", "mailbox.org", 
-    "startmail.com", "mailbox.org", "tutanota.com", "protonmail.com", "zoho.com", 
-    "outlook.in", "inbox.com", "mail.com", "gmx.com", "mail.ru", 
-    "yandex.com", "fastmail.com", "tutanota.com", "ymail.com", "live.com", 
-    "mail.ru", "seznam.cz", "inbox.com", "tiscali.co.uk", "comcast.net", 
-    "verizon.net", "shaw.ca", "bell.net", "sbcglobal.net", "earthlink.net", 
-    "charter.net", "frontier.com", "rediffmail.com", "zoho.in", "mail.bsnl.in", 
-    "mtml.net.in", "bigrock.in", "hostinger.in", "rackspace.in", "protonmail.ch", 
-    "mail.ru", "yandex.ru", "tutanota.de", "gmx.de", "web.de", "mail.com", 
-    "fastmail.fm", "hushmail.com", "mailfence.com", "runbox.com", "posteo.de", 
-    "countermail.com", "mailbox.org", "startmail.com", "mailbox.org", 
-    "tutanota.com", "protonmail.com", "zoho.com", "outlook.in", "inbox.com", 
-    "mail.com", "gmx.com", "mail.ru", "yandex.com", "fastmail.com", 
-    "tutanota.com", "ymail.com", "live.com", "mail.ru", "seznam.cz", 
-    "inbox.com", "tiscali.co.uk", "comcast.net", "verizon.net", "shaw.ca", 
-    "bell.net", "sbcglobal.net", "earthlink.net", "charter.net", "frontier.com", 
-    "rediffmail.com", "zoho.in", "mail.bsnl.in", "mtml.net.in", "bigrock.in", 
-    "hostinger.in", "rackspace.in", "protonmail.ch", "mail.ru", "yandex.ru", 
-    "tutanota.de", "gmx.de", "web.de", "mail.com", "fastmail.fm", "hushmail.com", 
-    "mailfence.com", "runbox.com", "posteo.de", "countermail.com", "mailbox.org", 
-    "startmail.com", "mailbox.org", "tutanota.com", "protonmail.com", "zoho.com", 
-    "outlook.in", "inbox.com", "mail.com", "gmx.com", "mail.ru", 
-    "yandex.com", "fastmail.com", "tutanota.com", "ymail.com", "live.com", 
-    "mail.ru", "seznam.cz", "inbox.com", "tiscali.co.uk", "comcast.net", 
-    "verizon.net", "shaw.ca", "bell.net", "sbcglobal.net", "earthlink.net", 
-    "charter.net", "frontier.com", "rediffmail.com", "zoho.in", "mail.bsnl.in", 
-    "mtml.net.in", "bigrock.in", "hostinger.in", "rackspace.in", "protonmail.ch", 
-    "mail.ru", "yandex.ru", "tutanota.de", "gmx.de", "web.de", "mail.com", 
-    "fastmail.fm", "hushmail.com", "mailfence.com", "runbox.com", "posteo.de", 
-    "countermail.com", "mailbox.org", "startmail.com"
-}
-
+# List of trusted email providers (removing duplicates for simplicity)
+trusted_providers = set([
+    "gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "icloud.com",
+    "pintrest.com", "linkedin.com", "protonmail.com", "zoho.com", "aol.com",
+    "gmx.com", "mail.com", "yandex.com", "fastmail.com", "tutanota.com"
+])
 
 # Function to extract sender's email
 def extract_email(text):
